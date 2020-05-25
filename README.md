@@ -39,6 +39,8 @@ But the tests only work with python3.
 docker run -p 9000:9000 --rm --name ipsec_exporter -d \
     -v /etc/ipsec.d/:/etc/ipsec.d/ -v \
     /var/run/pluto/pluto.ctl:/var/run/pluto/pluto.ctl \
+    -v /sbin/ipsec:/usr/sbin/ipsec \
+    -v /usr/libexec/ipsec/:/usr/libexec/ipsec/ \
     paradigmadigitalorg/prometheus-ipsec-exporter:amazon-2
 ```
 
