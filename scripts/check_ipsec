@@ -60,8 +60,8 @@ test_tunnel() {
 	then
 	    tunneltest=$($IPSECCMD status $CONN | grep -e "ESTABLISHED" | wc -l)
 	    if [[ "$tunneltest" -eq "0" ]]
-    	then
-		    tunneltest=$($IPSECCMD whack --status | grep -e "IPsec SA established" | grep -e "newest IPSEC" |grep -e "$CONN" | wc -l)
+    	    then
+                tunneltest=$($IPSECCMD whack --status | grep -e "IPsec SA established" | grep -e "newest IPSEC" |grep -e "$CONN" | wc -l)
 	    fi
 	else
 	    tunneltest=$($IPSECCMD whack --status | grep -e "IPsec SA established" | grep -e "newest IPSEC" |grep -e "$CONN" | wc -l)
@@ -91,21 +91,9 @@ case "$1" in
 
 	if [ $# -eq 1 ]
 	then
-    	test_tunnel $1
+    	  test_tunnel $1
     	else
-	        if [ $# -eq 2 ]
-	        then
-    		    ping_tunnel $1 $2
-    	    else
-
-    	        if [ $# -eq 3 ]
-		        then
-    		        ping_tunnel_rtt $1 $2
-    		    else
-
-    		        print_help
-    		    fi
-    	    fi
-    fi
+          print_help
+        fi
     ;;
 esac
