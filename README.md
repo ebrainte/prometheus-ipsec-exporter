@@ -2,15 +2,6 @@
 Ipsec exporter to prometheus. This program creates an endpoint in that exposes
 the state of ipsec tunnels.
 
-There's [this go project](https://github.com/dennisstritzke/ipsec_exporter)
-which does more or less the same as this project. It's main problem is that it
-uses a way to test that the tunnel is up that doesn't work with Amazon Linux.
-Amazon Linux uses `openswan` and that program is probably meant to be used with
-`libreswan`.
-
-Anyway, this project works correctly with both of them, since the way to check
-that the tunnel is up is to ping the other side, not to execute a `ipsec`
-command.
 
 ## Requirements
 
@@ -41,20 +32,18 @@ docker run -p 9116:9116 --rm --name ipsec_exporter -d \
     /var/run/pluto/pluto.ctl:/var/run/pluto/pluto.ctl \
     -v /sbin/ipsec:/usr/sbin/ipsec \
     -v /usr/libexec/ipsec/:/usr/libexec/ipsec/ \
-    paradigmadigitalorg/prometheus-ipsec-exporter:amazon-2
+    ebrainte/ipsec-exporter:latest
 ```
 
-This will create an endpoint in the direction http://localhost:9000/metrics.
+This will create an endpoint in the direction http://localhost:9116/metrics.
 
 ## Build docker image
 
-There's two dockerfiles. One for Amazon Linux 1 image and the other for Amazon
-Linux 2 image:
 
 ``` bash
 docker login
-docker build -f Dockerfile_2 -t paradigmadigitalorg/prometheus-ipsec-exporter:amazon-2 .
-docker push paradigmadigitalorg/prometheus-ipsec-exporter:amazon-2
+docker build -f Dockerfile -t ebrainte/ipsec-exporter:latest .
+docker push ebrainte/ipsec-exporter:latest
 ```
 
 ## Automatic deployment
@@ -73,14 +62,11 @@ ansible-playbook -i "$ip," -e ansible_ssh_user=$aws_user -e \
 
 Note the comma after $ip, to use an inventory from the CLI you must use it like
 this.
-
-## Testing
-
-``` bash
-docker run -ti -v `pwd`:/tox/files/ alexperezpujol/tox:latest tox
 ```
 
 ## Third party
+
+Based on: https://github.com/paradigmadigital/prometheus-ipsec-exporter/
 
 The script's source used to check if the tunnel is up may be checked in the
 [zabbix-ipsec](https://github.com/a-schild/zabbix-ipsec) github repository. It's
