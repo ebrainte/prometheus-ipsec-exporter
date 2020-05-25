@@ -70,7 +70,7 @@ class IpsecExporter:
         "Start the web application."
         self.serve_metrics()
         self.app.run(
-            port="9000",
+            port="9116",
             host="0.0.0.0",
             use_reloader=False,
             debug=False
