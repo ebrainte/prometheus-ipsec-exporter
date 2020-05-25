@@ -36,7 +36,7 @@ But the tests only work with python3.
 ## Usage
 
 ```bash
-docker run -p 9000:9000 --rm --name ipsec_exporter -d \
+docker run -p 9116:9116 --rm --name ipsec_exporter -d \
     -v /etc/ipsec.d/:/etc/ipsec.d/ -v \
     /var/run/pluto/pluto.ctl:/var/run/pluto/pluto.ctl \
     -v /sbin/ipsec:/usr/sbin/ipsec \
